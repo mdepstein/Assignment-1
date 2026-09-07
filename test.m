@@ -3,9 +3,9 @@ ylist = test_func01(tlist);
 figure();
 plot(tlist,ylist)
 hold on
-x1 = bisection_solver1(@test_func01,-5,5)
-x2 = newton_solver1(@test_func01,-3)
-x3 = secant_solver1(@test_func01,-5,5)
+% x1 = bisection_solver1(@test_func01,-5,5)
+% x2 = newton_solver1(@test_func01,-3)
+% x3 = secant_solver1(@test_func01,-5,5)
 
 %Definition of the test function and its derivative (as a single function):
 %This definition uses the function keyword
@@ -45,8 +45,8 @@ function x = newton_solver1(fun,x0)
     plot(x1,0,".","MarkerSize",10, "Color",'c');
     end
     x = x1
-
 end
+
 function x = secant_solver1(fun,x0, x1)
 for i = 1:10
     x2 = x1 - fun(x1) * (x1 - x0) / (fun(x1) - fun(x0));
