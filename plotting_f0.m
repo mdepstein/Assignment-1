@@ -37,11 +37,11 @@ for i = 1:length(error_list)
     error = error_list{i};
     error_list0 = [error_list0, error(1:end-1)];
     error_list1 = [error_list1, error(2:end)];
-    h(1) = loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','k', 'MarkerSize', 2);
+    h(1) = loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','r', 'MarkerSize', 2, 'MarkerEdgeColor','r');
     hold on;
     xlabel('e_n')
     ylabel('e_{n+1}')
-    title("Newton's Methods Data")
+    title("Fzero Convergence Rate Plot")
 end
 
 x_regression = [];
@@ -60,7 +60,7 @@ for n=1:length(index_list)
         y_regression(end+1) = error_list1(n);
     end
 end
-h(2) = loglog(x_regression,y_regression,'k-','linewidth',2,'Color','b')
+h(2) = loglog(x_regression,y_regression,'ko','markerfacecolor','b', 'MarkerSize', 2,'MarkerEdgeColor','b')
 
 %x_regression -> e_n
 %y_regression -> e_{n+1}
@@ -68,12 +68,12 @@ h(2) = loglog(x_regression,y_regression,'k-','linewidth',2,'Color','b')
 
 %example for how to plot fit line
 %generate x data on a logarithmic range
-fit_line_x = 10.^[-5:.1:1];
+fit_line_x = 10.^[-8:.1:1];
 %compute the corresponding y values
 fit_line_y = k*fit_line_x.^p;
 %plot on a loglog plot.
-h(2) = loglog(fit_line_x,fit_line_y,'k-','linewidth',2,'Color','r')
-l = legend(h,"Raw Data", "Fit Line")
+h(3) = loglog(fit_line_x,fit_line_y,'k-','linewidth',2,'Color','k')
+l = legend(h,"Raw Data", "Filtered Data","Fit Line")
 set(l,'location','northwest');
 fontsize(l, 14, "points"); % Sets the legend font size to 14 points
 end

@@ -41,7 +41,7 @@ for i = 1:length(error_list)
     hold on;
     xlabel('e_n')
     ylabel('e_{n+1}')
-    title("Newton's Methods Data")
+    title("Newton's Convergence Rate Plot")
 end
 
 x_regression = [];
@@ -61,7 +61,7 @@ for n=1:length(index_list)
     end
 end
 
-h(2) = loglog(x_regression,y_regression,'k-','linewidth',2,'Color','b')
+h(2) = loglog(x_regression,y_regression,'ko','markerfacecolor','b', 'MarkerSize', 2, 'Color','b')
 
 %x_regression -> e_n
 %y_regression -> e_{n+1}
