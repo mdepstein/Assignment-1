@@ -2,7 +2,7 @@ function x = newton_solver1(fun,x0,max_iter,ftol,dxtol,dx_max)
     for i = 1:max_iter
         [f,dfdx] = fun(x0);
         
-        if abs(fun(x0)) < ftol
+        if abs(f) < ftol
             fprintf('ftol\n');
             x = x0;
             return
