@@ -37,11 +37,11 @@ for i = 1:length(error_list)
     error = error_list{i};
     error_list0 = [error_list0, error(1:end-1)];
     error_list1 = [error_list1, error(2:end)];
-    loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','k', 'MarkerSize', 2);
+    h(1) = loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','k', 'MarkerSize', 2);
     hold on;
     xlabel('e_n')
     ylabel('e_{n+1}')
-    title("Newton's Methods Raw Data")
+    title("Newton's Methods Data")
 end
 
 x_regression = [];
@@ -67,11 +67,12 @@ end
 
 %example for how to plot fit line
 %generate x data on a logarithmic range
-fit_line_x = 10.^[-16:.01:1];
+fit_line_x = 10.^[-6:.01:1];
 %compute the corresponding y values
 fit_line_y = k*fit_line_x.^p;
 %plot on a loglog plot.
-%loglog(fit_line_x,fit_line_y,'k-','linewidth',2,'Color','b')
+h(2) = loglog(fit_line_x,fit_line_y,'k-','linewidth',2,'Color','r')
+legend(h,"Raw Data", "Fit Line")
 end
 
 function [fval,dfdx] = test_function(x)
