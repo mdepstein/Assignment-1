@@ -11,22 +11,32 @@ function plotting()
     x0 = 2.7;
     %Call your root finder using the recording function:
     x_root = newton_solver1(f_record,x0,1000,10e-6,10e-6,100);
-    x_root
+    %x_root = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
     %See what input values were used when f_record was called:
     input_list = my_recorder.get_input_list();
     %at this point, input_list will be populated with the input arguments
     %that fzero used to call test_function
     %plot the inputs
-    semilogy(1:length(input_list),abs(input_list-x_root),'ko','markerfacecolor','k');
-    poly = polyfit(log(1:length(input_list),abs(input_list-x_root),2));
-    semilogy(1:length(input_list), poly)
+    figure();
+    error = abs(input_list-x_root)
+    semilogy(error(1:end-1),error(2:end),'ko','markerfacecolor','k');
+    hold on
+    poly = polyfit(log10(error(1:end-1)),log10(error(2:end)),1);
+    % 4. Generate points for the regression line
+    % We evaluate the line across the range of our x data
+    x_fit = logspace(log10(min(input_list)), log10(max(input_list)), 20);
+    X_fit_log = log10(x_fit);
+
+    % Calculate fitted Y values in log space, then convert back to linear scale
+    Y_fit_log = polyval(poly, X_fit_log);
+    y_fit = 10.^Y_fit_log;
+
+    loglog(x_fit, y_fit, 'b-', 'LineWidth', 2); 
     %reset input_list for the next test
     my_recorder.clear_input_list();
 end
 
-function [X, dfdx] = test_function(x)
-    %perform the rest of the computation to generate output
-    %I just put in a quadratic function as an example
-    X = (x-3).*(x-7);
-    dfdx = 2*x-10;
+function [fval,dfdx] = test_function(x)
+fval = (x.^3)/100 - (x.^2)/8 + 2*x + 6*sin(x/2+6) -.7 - exp(x/6);
+dfdx = 3*(x.^2)/100 - 2*x/8 + 2 +(6/2)*cos(x/2+6) - exp(x/6)/6;
 end

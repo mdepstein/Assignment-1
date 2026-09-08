@@ -45,7 +45,6 @@ classdef input_recorder < handle
 
         function varargout = record_wrapper(obj,fun,x)
             nOutputs = nargout;
-            nargout
             varargout = cell(1,nOutputs);
             if nargout == 1
                 a = fun(x);
