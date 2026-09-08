@@ -4,7 +4,7 @@ function x = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
         f_right = fun(x_right);
         x_c = (x_left+x_right)/2;
         f_c = fun(x_c);
-        plot(x_c,f_c,".","MarkerSize",10, "Color",'r');
+        % plot(x_c,f_c,".","MarkerSize",10, "Color",'r');
     
         if (sign(f_c) == sign(f_right))
             x_right = x_c;
@@ -12,20 +12,21 @@ function x = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
             x_left = x_c;
         end
 
-        if (x_right-x_left) <= dxtol
-            fprintf('dxtol');
+        if (abs(x_right)-abs(x_left)) <= dxtol
+            fprintf('dxtol\n');
             x = 'N/A';
             return
         end
         
-        if abs(f(x_c))<ftol
-            fprintf('ftol');
+        if abs(fun(x_c))<ftol
+            fprintf('ftol\n');
             x='N/A';
             return
         end
 
     hold on
     end
-    x = x_c;
+    x = x_c
     p = log((e-1)/e)/log(e/(e-1));
+    fprintf('max_iter\n')
 end

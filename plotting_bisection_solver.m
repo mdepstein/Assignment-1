@@ -8,16 +8,19 @@ my_recorder = input_recorder();
 f_record = my_recorder.generate_recorder_fun(@test_function);
 
 %initialize guesses for fzero
-x0 = zeros(1000, 1);
-x_root = zeros(size(x0));
+x_left = zeros(1000, 1);
+x_right = zeros(1000, 1);
+
+% x_root = zeros(size(x_left));
 
 
-for i = 1:length(x0)
+for i = 1:length(x_left)
     % Randomize guess
-    x0(i) = -3+6*rand();
+    x_left(i) = -3+6*rand();
+    x_right(i) = -3+6*rand();
 
     % Run solver
-    x_root(i) = bisection_solver1(f_record,x0(i),1000,10e-10,10e-10,100);
+    x_root(i) = bisection_solver1(f_record,x_left(i), x_right(i),10e-10,10e-10,1000);
     input_list = my_recorder.get_input_list();
     
     % Calculate error
