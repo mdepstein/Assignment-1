@@ -35,8 +35,8 @@ error_list0 = [];
 error_list1 = [];
 for i = 1:length(error_list)
     error = error_list{i};
-    x_regression = [x_regression,error(1:end-1)];
-    y_regression = [y_regression, error(2:end)];
+    error_list0 = [error_list0, error(1:end-1)];
+    error_list1 = [error_list1, error(2:end)];
     loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','k', 'MarkerSize', 2);
     hold on;
     xlabel('e_n')
