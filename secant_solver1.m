@@ -1,6 +1,6 @@
 function x = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
+    f0 = fun(x0);
     for i = 1:max_iter
-        f0 = fun(x0);
         f1 = fun(x1);
         x2 = x1 - f1 * (x1 - x0) / (f1 - f0);
         % plot(x2,0,".","MarkerSize",10, "Color",'b');
@@ -25,6 +25,7 @@ function x = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
 
         x0=x1;
         x1=x2;
+        f0=f1;
         
     end
     x = x1;
