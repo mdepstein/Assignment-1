@@ -1,4 +1,4 @@
-function plotting_newton_solver()
+function plotting_f0()
 %Create an instance of the input_recorder
 my_recorder = input_recorder();
 
@@ -17,7 +17,7 @@ for i = 1:length(x0)
     x0(i) = -3+6*rand();
 
     % Run solver
-    x_root(i) = newton_solver1(f_record,x0(i),1000,1e-12,1e-12,1e10);
+    x_root(i) = fzero(f_record,x0(i));
     input_list = my_recorder.get_input_list();
     
     % Calculate error
@@ -37,7 +37,7 @@ for i = 1:length(error_list)
     error = error_list{i};
     error_list0 = [error_list0, error(1:end-1)];
     error_list1 = [error_list1, error(2:end)];
-    h(1) = loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+    h(1) = loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','k', 'MarkerSize', 2);
     hold on;
     xlabel('e_n')
     ylabel('e_{n+1}')
@@ -60,7 +60,6 @@ for n=1:length(index_list)
         y_regression(end+1) = error_list1(n);
     end
 end
-
 h(2) = loglog(x_regression,y_regression,'k-','linewidth',2,'Color','b')
 
 %x_regression -> e_n
@@ -73,8 +72,8 @@ fit_line_x = 10.^[-5:.1:1];
 %compute the corresponding y values
 fit_line_y = k*fit_line_x.^p;
 %plot on a loglog plot.
-h(3) = loglog(fit_line_x,fit_line_y,'k-','linewidth',2,'Color','black');
-l = legend(h,"Raw Data", "Filtered Data", "Fit Line");
+h(2) = loglog(fit_line_x,fit_line_y,'k-','linewidth',2,'Color','r')
+l = legend(h,"Raw Data", "Fit Line")
 set(l,'location','northwest');
 fontsize(l, 14, "points"); % Sets the legend font size to 14 points
 end
