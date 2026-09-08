@@ -19,12 +19,12 @@ function plotting()
     %plot the inputs
     figure();
     error = abs(input_list-x_root)
-    semilogy(error(1:end-1),error(2:end),'ko','markerfacecolor','k');
+    loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','k');
     hold on
     poly = polyfit(log10(error(1:end-1)),log10(error(2:end)),1);
     % 4. Generate points for the regression line
     % We evaluate the line across the range of our x data
-    x_fit = logspace(log10(min(input_list)), log10(max(input_list)), 20);
+    x_fit = logspace(log10(min(error)), log10(max(error)), 20);
     X_fit_log = log10(x_fit);
 
     % Calculate fitted Y values in log space, then convert back to linear scale
@@ -32,6 +32,9 @@ function plotting()
     y_fit = 10.^Y_fit_log;
 
     loglog(x_fit, y_fit, 'b-', 'LineWidth', 2); 
+    ylabel('Error_{n+1}')
+    xlabel('Error_{n}')
+
     %reset input_list for the next test
     my_recorder.clear_input_list();
 end
