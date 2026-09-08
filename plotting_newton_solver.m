@@ -67,12 +67,14 @@ end
 
 %example for how to plot fit line
 %generate x data on a logarithmic range
-fit_line_x = 10.^[-6:.01:1];
+fit_line_x = 10.^[-5:.1:1];
 %compute the corresponding y values
 fit_line_y = k*fit_line_x.^p;
 %plot on a loglog plot.
 h(2) = loglog(fit_line_x,fit_line_y,'k-','linewidth',2,'Color','r')
-legend(h,"Raw Data", "Fit Line")
+l = legend(h,"Raw Data", "Fit Line")
+set(l,'location','northwest');
+fontsize(l, 14, "points"); % Sets the legend font size to 14 points
 end
 
 function [fval,dfdx] = test_function(x)
