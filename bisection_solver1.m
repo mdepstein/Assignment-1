@@ -14,13 +14,13 @@ function x = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
 
         if (abs(x_right)-abs(x_left)) <= dxtol
             fprintf('dxtol\n');
-            x = 'N/A';
+            x = x_c;
             return
         end
         
         if abs(fun(x_c))<ftol
             fprintf('ftol\n');
-            x='N/A';
+            x=x_c;
             return
         end
 

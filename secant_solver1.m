@@ -12,20 +12,21 @@ function x = secant_solver1(fun,x0, x1,max_iter,ftol,dxtol,dx_max)
 
         if abs(x1-x0) <= dxtol
             fprintf('dxtol');
-            x = 'N/A';
+            x = x1;
             return
         end
 
         if abs(fun(x0))<ftol
             fprintf('ftol');
-            x='N/A';
+            x=x1;
             return
         end
 
         if abs(fun(x1) - fun(x0)) > dx_max
             fprintf('dx_max');
-            x = 'N/A';
+            x = x1;
             return
         end  
     end
+    x = x1;
 end
