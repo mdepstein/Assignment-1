@@ -1,34 +1,46 @@
-function plotting_step_4()
+function plotting_newton_solver()
 %Create an instance of the input_recorder
 my_recorder = input_recorder();
+
 %Use input_recorder to generate a version of the test function
 %that records the input after every iteration
 %Since test_fun is defined using function keyword
 f_record = my_recorder.generate_recorder_fun(@test_function);
-%If test_fun is defined as an anonymous function:
-%f_record = my_recorder.generate_recorder_fun(test_function);
+
 %initialize guesses for fzero
 x0 = zeros(1000, 1);
-%Call your root finder using the recording function:
-for i = 1:length(x0)
-    x0(i) = -3+6*rand();
-    x_root(i) = newton_solver1(f_record,x0(i),1000,10e-10,10e-10,100);
+x_root = zeros(size(x0));
 
-    %x_root = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
-    %See what input values were used when f_record was called:
+
+for i = 1:length(x0)
+    % Randomize guess
+    x0(i) = -3+6*rand();
+
+    % Run solver
+    x_root(i) = newton_solver1(f_record,x0(i),1000,10e-10,10e-10,100);
+    input_list = my_recorder.get_input_list();
+    
+    % Calculate error
+    error = abs(input_list-x_root(i));
+    error_list{i} = error;
+
+    % Reset recorder
+    my_recorder.clear_input_list();
 end
-x0
-    % input_list(i) = my_recorder.get_input_list();
-%at this point, input_list will be populated with the input arguments
-%that fzero used to call test_function
+
+
 %plot the inputs
-error = abs(x0-x_root);
 figure;
-loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','k');
-xlabel('e_n')
-ylabel('e_{n+1}')
-title("Newton's Methods Raw Data")
-hold on
+
+for i = 1:length(error_list)
+    error = error_list{i};
+    loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','k', 'MarkerSize', 2);
+    hold on;
+    xlabel('e_n')
+    ylabel('e_{n+1}')
+    title("Newton's Methods Raw Data")
+end
+
 % poly = polyfit(log10(error(1:end-1)),log10(error(2:end)),1);
 % 4. Generate points for the regression line
 % We evaluate the line across the range of our x data
@@ -41,7 +53,7 @@ hold on
 
 % loglog(x_fit, y_fit, 'b-', 'LineWidth', 2); 
 %reset input_list for the next test
-my_recorder.clear_input_list();
+% my_recorder.clear_input_list();
 end
 
 function [fval,dfdx] = test_function(x)
