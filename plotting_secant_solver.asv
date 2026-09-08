@@ -8,8 +8,8 @@ my_recorder = input_recorder();
 f_record = my_recorder.generate_recorder_fun(@test_function);
 
 %initialize guesses for fzero
-x0 = zeros(590, 1);
-x1 = zeros(500, 1);
+x0 = zeros(1000, 1);
+x1 = zeros(1000, 1);
 x_root = zeros(size(x0));
 
 
@@ -19,7 +19,7 @@ for i = 1:length(x0)
     x1(i) = -3+6*rand();
 
     % Run solver
-    x_root(i) = secant_solver1(f_record,x0(i),x1(i),1000,1e-12,1e-12,100);
+    x_root(i) = secant_solver1(f_record,x0(i),x1(i),1000,1e-12,1e-12,1e-10);
     input_list = my_recorder.get_input_list();
 
     % Calculate error
@@ -38,7 +38,7 @@ for i = 1:length(error_list)
     error = error_list{i};
     error_list0 = [error_list0, error(1:end-1)];
     error_list1 = [error_list1, error(2:end)];
-    loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','b', 'MarkerSize', 2);
+    loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','k', 'MarkerSize', 2);
     hold on;
     xlabel('e_n')
     ylabel('e_{n+1}')
@@ -74,10 +74,10 @@ end
 % loglog(fit_line_x,fit_line_y,'k-','linewidth',2)
 % end
 % 
-function [fval,dfdx] = test_function(x)
-fval = (x.^3)/100 - (x.^2)/8 + 2*x + 6*sin(x/2+6) -.7 - exp(x/6);
-dfdx = 3*(x.^2)/100 - 2*x/8 + 2 +(6/2)*cos(x/2+6) - exp(x/6)/6;
-end
+% function [fval,dfdx] = test_function(x)
+% fval = (x.^3)/100 - (x.^2)/8 + 2*x + 6*sin(x/2+6) -.7 - exp(x/6);
+% dfdx = 3*(x.^2)/100 - 2*x/8 + 2 +(6/2)*cos(x/2+6) - exp(x/6)/6;
+% end
 % 
 % %example for how to compute the fit line
 % %data points to be used in the regression
