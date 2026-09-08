@@ -17,7 +17,7 @@ for i = 1:length(x0)
     x0(i) = -3+6*rand();
 
     % Run solver
-    x_root(i) = newton_solver1(f_record,x0(i),1000,10e-10,10e-10,100);
+    x_root(i) = newton_solver1(f_record,x0(i),1000,1e-12,1e-12,1e10);
     input_list = my_recorder.get_input_list();
     
     % Calculate error
@@ -47,6 +47,7 @@ end
 x_regression = [];
 y_regression = [];
 filter_list = [1e-15, 1e-2, 1e-14, 1e-2, 2];
+index_list = 1:length(error_list0);
 %iterate through the collected data
 for n=1:length(index_list)
     %if the error is not too big or too small
@@ -70,7 +71,7 @@ fit_line_x = 10.^[-16:.01:1];
 %compute the corresponding y values
 fit_line_y = k*fit_line_x.^p;
 %plot on a loglog plot.
-loglog(fit_line_x,fit_line_y,'k-','linewidth',2)
+%loglog(fit_line_x,fit_line_y,'k-','linewidth',2,'Color','b')
 end
 
 function [fval,dfdx] = test_function(x)
