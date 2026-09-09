@@ -28,7 +28,7 @@ for i = 1:length(x0)
     my_recorder.clear_input_list();
 end
 
-% predicted_k = 0.5*()
+
 
 %plot the inputs
 figure;
