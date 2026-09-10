@@ -28,7 +28,8 @@ for i = 1:length(x0)
     my_recorder.clear_input_list();
 end
 x_r = x_root(1);
-delta_x = x_root(end)-x_root(end-1);
+delta_x = .000001;
+[df,dx] = test_function(x_r+delta_x)
 dx = (f_record(x_r+delta_x)-f_record(x_r-delta_x))/(2*delta_x);
 dx2 = (f_record(x_r+delta_x)-2*f_record(x_r)-f_record(x_r-delta_x))/(delta_x^2);
 k_predicted = abs(0.5*dx2/dx)
