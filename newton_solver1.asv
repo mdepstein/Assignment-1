@@ -23,10 +23,7 @@ function [x,flag] = newton_solver1(fun,x0,max_iter,ftol,dxtol,dx_max)
         dx = -f/dfdx;
         
         if abs(dx) > dx_max
-            %dx = sign(dx)*dx_max;
-            flag = 1; 
-            x = x0;
-            return
+            dx = sign(dx)*dx_max;
         end
 
         x1=x0+dx;
@@ -34,7 +31,6 @@ function [x,flag] = newton_solver1(fun,x0,max_iter,ftol,dxtol,dx_max)
         if abs(dx) <= dxtol
             fprintf('dxtol\n');
             x = x1;
-            flag = 0;
             return
         end
 
@@ -42,6 +38,5 @@ function [x,flag] = newton_solver1(fun,x0,max_iter,ftol,dxtol,dx_max)
         hold on
     end
     x = x0
-    flag = 1;
     fprintf('max_iter\n')
 end
