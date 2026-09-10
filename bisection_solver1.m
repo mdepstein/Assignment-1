@@ -9,8 +9,8 @@
 % max_iter: maximum iteration limit
 %OUTPUTS
 % x: estimate for root of fun
-% exit_flag: 0 if success, 1 if fail
-function x = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
+% exit_flag: 1 if success, 0 if fail
+function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
     for i = 1:max_iter
         f_left = fun(x_left);
         f_right = fun(x_right);
@@ -27,14 +27,14 @@ function x = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
         if (abs(x_right)-abs(x_left)) <= dxtol
             fprintf('dxtol\n');
             x = x_c;
-            flag = 0;
+            flag = 1;
             return
         end
         
         if abs(fun(x_c))<ftol
             fprintf('ftol\n');
             x=x_c;
-            flag = 0;
+            flag = 1;
             return
         end
 
@@ -42,6 +42,6 @@ function x = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
     end
     x = x_c
     p = log((e-1)/e)/log(e/(e-1));
-    flag = 1;
+    flag = 0;
     fprintf('max_iter\n')
 end

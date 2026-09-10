@@ -8,7 +8,7 @@
 % terminate when abs(-dx) > dxmax, where dxmax is a very large number
 %OUTPUTS:
 %x: approximate root of function
-%flag: 0 is success, 1 is failure
+%flag: 1 is success, 0 is failure
 function [x,flag] = newton_solver1(fun,x0,max_iter,ftol,dxtol,dx_max)
     for i = 1:max_iter
         [f,dfdx] = fun(x0);
@@ -16,7 +16,7 @@ function [x,flag] = newton_solver1(fun,x0,max_iter,ftol,dxtol,dx_max)
         if abs(f) < ftol
             fprintf('ftol\n');
             x = x0;
-            flag = 0;
+            flag = 1;
             return
         end
 
@@ -24,7 +24,7 @@ function [x,flag] = newton_solver1(fun,x0,max_iter,ftol,dxtol,dx_max)
         
         if abs(dx) > dx_max
             %dx = sign(dx)*dx_max;
-            flag = 1; 
+            flag = 0; 
             x = x0;
             return
         end
@@ -34,7 +34,7 @@ function [x,flag] = newton_solver1(fun,x0,max_iter,ftol,dxtol,dx_max)
         if abs(dx) <= dxtol
             fprintf('dxtol\n');
             x = x1;
-            flag = 0;
+            flag = 1;
             return
         end
 
@@ -42,6 +42,6 @@ function [x,flag] = newton_solver1(fun,x0,max_iter,ftol,dxtol,dx_max)
         hold on
     end
     x = x0
-    flag = 1;
+    flag = 0;
     fprintf('max_iter\n')
 end

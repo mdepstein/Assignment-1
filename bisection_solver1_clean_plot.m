@@ -32,19 +32,19 @@ function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
 
         if (abs(x_right)-abs(x_left)) <= dxtol
             fprintf('dxtol\n');
-            flag = 0;
+            flag = 1;
             return
         end
         
         if abs(fun(x_c))<ftol
             fprintf('ftol\n');
-            flag = 0;
+            flag = 1;
             return
         end
 
     hold on
     end
     p = log((e-1)/e)/log(e/(e-1));
-    flag = 1;
+    flag = 0;
     fprintf('max_iter\n')
 end

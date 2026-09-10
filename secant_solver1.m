@@ -10,7 +10,8 @@
 % terminate when abs(x1-x0) > dxmax, where dxmax is a very large number
 %OUTPUTS
 % x: estimate for root of fun
-% exit_flag: an integer indicating whether or not the solver succeeded
+% exit_flag: an integer indicating whether or not the solver succeeded, 1
+% if successful, 0 if failure
 function [x, flag] = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
     f0 = fun(x0);
     for i = 1:max_iter
@@ -21,21 +22,21 @@ function [x, flag] = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
         if abs(f1) <= ftol
             fprintf('ftol\n');
             x = x1;
-            flag = 0;
+            flag = 1;
             return
         end
 
         if abs(x2-x1) <= dxtol
             fprintf('dxtol\n');
             x = x2;
-            flag = 0;
+            flag = 1;
             return
         end
 
         if abs(f1 - f0) > dx_max
             fprintf('dx_max\n');
             x = x2;
-            flag = 1;
+            flag = 0;
             return
         end  
 
@@ -44,6 +45,6 @@ function [x, flag] = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
         f0=f1;
         
     end
-    flag = 1;
+    flag = 0;
     x = x1;
 end
