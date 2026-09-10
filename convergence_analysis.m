@@ -30,46 +30,48 @@ dx_max = 1e10;
 
 %initialize lists
 x_root = [];
-error_list = [];
+error_list = cell(length(guess_list1),1);
 flag = [];
 
-    for i = 1:length(guess_list)
+    for i = 1:length(guess_list1)
         if solver_flag == 1
             % If left guess is larger than right guess skip that guess
-            while guess_list1(i) >= guess_list2(i)
-                i = i+1;
-            end
-            [x_root(i), flag(i)]  = bisection_solver1(f_record, guess_list1, guess_list2, dxtol, ftol, max_iter);
+            % if guess_list1(i) <= guess_list2(i)
+            %     continue
+            % end
+            [x_root(i), flag(i)]  = bisection_solver1(f_record, guess_list1(i), guess_list2(i), dxtol, ftol, max_iter);
 
         elseif solver_flag == 2
-            [x_root(end+1), flag(end+1)] = newton_solver1(f_record, x_guess0, max_iter, ftol, dxtol, dx_max)
+            [x_root(i), flag(i)] = newton_solver1(f_record, guess_list1(i), max_iter, ftol, dxtol, dx_max);
 
         elseif solver_flag == 3
-            [x_root(i), flag(i)] = secant_solver1(f_record, guess_list1, guess_list2, max_iter, ftol, dxtol, dx_max);
+            [x_root(i), flag(i)] = secant_solver1(f_record, guess_list1(i), guess_list2(i), max_iter, ftol, dxtol, dx_max);
 
         elseif solver_flag == 4
-            [x_root(i), flag(i)] = fzero(f_record, x_guess0);
+            [x_root(i), flag(i)] = fzero(f_record, guess_list1(i));
 
         else
             fprintf('Enter a valid solver flag')
             return
         end
-        input_list = my_recorder.get_input_list()
+        input_list = my_recorder.get_input_list();
 
         % Calculate error
-        error = abs(input_list-x_root(i))
+        error = abs(input_list-x_root(i));
         error_list{i} = error;
 
         % Reset recorder
         my_recorder.clear_input_list();
     end
-    
-    % Predict k value (for Newton's method)
-    x_r = x_root(1);
-    h = 1e-4;
-    dx = (f_record(x_r+h)-f_record(x_r))/(h);
-    dx2 = (f_record(x_r+h)-2*f_record(x_r)-f_record(x_r-h))/(h^2);
-    k_predicted = abs(0.5*dx2/dx)
+
+    if solver_flag == 2
+        % Predict k value (for Newton's method)
+        x_r = x_root(1);
+        h_step = 1e-4;
+        dx = (f_record(x_r+h_step)-f_record(x_r))/(h_step);
+        dx2 = (f_record(x_r+h_step)-2*f_record(x_r)-f_record(x_r-h_step))/(h_step^2);
+        k_predicted = abs(0.5*dx2/dx)
+    end
 
 
     %plot the inputs
@@ -95,7 +97,7 @@ flag = [];
         hold on;
         xlabel('e_n')
         ylabel('e_{n+1}')
-        title({solver_title}, " Convergence Rate Plot")
+        title({solver_title} + " Convergence Rate Plot")
     end
 
     x_regression = [];

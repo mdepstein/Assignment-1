@@ -13,42 +13,51 @@
 % if guess_list2 is not needed, then set to zero in input
     %filter_list: a list of constants used to filter the collected data
 function convergence_analysis(solver_flag, fun, x_guess0, guess_list1, guess_list2, filter_list)
+
 %Create an instance of the input_recorder
 my_recorder = input_recorder();
+
+%Use input_recorder to generate a version of the test function
+%that records the input after every iteration
+%Since test_fun is defined using function keyword
+f_record = my_recorder.generate_recorder_fun(fun);
+
+% Exit parameters
 dxtol = 1e-12;
 ftol = 1e-12;
 max_iter = 1000;
 dx_max = 1e10;
-    
 
-    %Use input_recorder to generate a version of the test function
-    %that records the input after every iteration
-    %Since test_fun is defined using function keyword
-    f_record = my_recorder.generate_recorder_fun(fun);
-    
-    %initialize guesses for fzero
-    x0 = zeros(1000, 1);
-    x_root = zeros(size(x0));
+%initialize lists
+x_root = [];
+error_list = [];
+flag = [];
 
-    for i = 1:length(x0)
-        % Randomize guess
-        x0(i) = -3+6*rand();
-
-        % Run solver
-
+    for i = 1:length(guess_list1)
         if solver_flag == 1
-            [x_root(i), flag(i)]  = bisection_solver1(fun, guess_list1, guess_list2, dxtol, ftol, max_iter);
+            % If left guess is larger than right guess skip that guess
+            while guess_list1(i) >= guess_list2(i)
+                i = i+1;
+            end
+            [x_root(i), flag(i)]  = bisection_solver1(f_record, guess_list1, guess_list2, dxtol, ftol, max_iter);
+
         elseif solver_flag == 2
-            [x_root(i), flag(i)] = newton_solver1(fun, x_guess0, max_iter, ftol, dxtol, dx_max);
+            [x_root(i), flag(i)] = newton_solver1(f_record, x_guess0, max_iter, ftol, dxtol, dx_max);
+
         elseif solver_flag == 3
-            [x_root(i), flag(i)] = secant_solver1(fun, guess_list1, guess_list2, max_iter, ftol, dx_tol, dx_max);
+            [x_root(i), flag(i)] = secant_solver1(f_record, guess_list1, guess_list2, max_iter, ftol, dxtol, dx_max);
+
         elseif solver_flag == 4
-            [x_root(i), flag(i)] = fzero(fun, x_guess0);
+            [x_root(i), flag(i)] = fzero(f_record, x_guess0);
+
+        else
+            fprintf('Enter a valid solver flag')
+            return
         end
-        input_list = my_recorder.get_input_list();
+        input_list = my_recorder.get_input_list()
 
         % Calculate error
-        error = abs(input_list-x_root(i));
+        error = abs(input_list(i)-x_root(i))
         error_list{i} = error;
 
         % Reset recorder
@@ -69,11 +78,11 @@ dx_max = 1e10;
     error_list1 = [];
 
     if solver_flag == 1
-        solver_title = "Bisection";
+        solver_title = "Bisection Method";
     elseif solver_flag == 2
-        solver_title = "Newton's";
+        solver_title = "Newton's Method";
     elseif solver_flag == 3
-        solver_title = "Secant";
+        solver_title = "Secant Method";
     elseif solver_flag == 4
         solver_title = "FZero";
     end
@@ -86,7 +95,7 @@ dx_max = 1e10;
         hold on;
         xlabel('e_n')
         ylabel('e_{n+1}')
-        title({solver_title}, "Convergence Rate Plot")
+        title({solver_title}, " Convergence Rate Plot")
     end
 
     x_regression = [];
@@ -124,10 +133,6 @@ dx_max = 1e10;
     fontsize(l, 14, "points"); % Sets the legend font size to 14 points
 end
 
-function [fval,dfdx] = test_function(x)
-    fval = (x.^3)/100 - (x.^2)/8 + 2*x + 6*sin(x/2+6) -.7 - exp(x/6);
-    dfdx = 3*(x.^2)/100 - 2*x/8 + 2 +(6/2)*cos(x/2+6) - exp(x/6)/6;
-end
     
     %example for how to compute the fit line
     %data points to be used in the regression
@@ -149,5 +154,3 @@ function [p,k] = generate_error_fit(x_regression,y_regression)
     k = exp(coeff_vec(2))
 end
 
-guess
-convergence_analysis(1, @test_function, 2, guess_list1, guess_list2, filter_list)
