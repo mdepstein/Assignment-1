@@ -28,32 +28,30 @@ ftol = 1e-12;
 max_iter = 1000;
 dx_max = 1e10;
 
-%initialize guesses for fzero
+%initialize lists
 x_root = [];
 error_list = [];
 flag = [];
 
-    for i = 1:length(x_guess0)
-        % Randomize guess
-        % Run solver
-
+    for i = 1:length(guess_list)
         if solver_flag == 1
+            % If left guess is larger than right guess skip that guess
+            while guess_list1(i) >= guess_list2(i)
+                i = i+1;
+            end
             [x_root(i), flag(i)]  = bisection_solver1(f_record, guess_list1, guess_list2, dxtol, ftol, max_iter);
-            % x_root(i)  = bisection_solver1(fun, guess_list1(i), guess_list2(i), dxtol, ftol, max_iter);
 
         elseif solver_flag == 2
             [x_root(end+1), flag(end+1)] = newton_solver1(f_record, x_guess0, max_iter, ftol, dxtol, dx_max)
 
-            % x_root(i) = newton_solver1(fun, x_guess0, max_iter, ftol, dxtol, dx_max);
-
         elseif solver_flag == 3
             [x_root(i), flag(i)] = secant_solver1(f_record, guess_list1, guess_list2, max_iter, ftol, dxtol, dx_max);
-            % x_root(i) = secant_solver1(fun, guess_list1, guess_list2, max_iter, ftol, dx_tol, dx_max);
 
         elseif solver_flag == 4
             [x_root(i), flag(i)] = fzero(f_record, x_guess0);
-            % x_root(i)= fzero(fun, x_guess0);
+
         else
+            fprintf('Enter a valid solver flag')
             return
         end
         input_list = my_recorder.get_input_list()
