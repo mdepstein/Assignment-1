@@ -32,7 +32,7 @@ dx_max = 1e10;
 x_root = [];
 error_list = cell(length(guess_list1),1);
 flag = [];
-
+fval = [];
     for i = 1:length(guess_list1)
         if solver_flag == 1
             % If left guess is larger than right guess skip that guess
@@ -48,7 +48,7 @@ flag = [];
             [x_root(i), flag(i)] = secant_solver1(f_record, guess_list1(i), guess_list2(i), max_iter, ftol, dxtol, dx_max);
 
         elseif solver_flag == 4
-            [x_root(i), flag(i)] = fzero(f_record, guess_list1(i));
+            [x_root(i), fval(i),flag(i)] = fzero(f_record, guess_list1(i));
 
         else
             fprintf('Enter a valid solver flag')
@@ -83,12 +83,34 @@ flag = [];
         solver_title = "Bisection Method";
     elseif solver_flag == 2
         solver_title = "Newton's Method";
+        x = linspace(0,50,1000);
+        y = fun(x);
+        h(1) = plot(x,y,Color='k')
+        x_success = guess_list1(find(flag==1));
+        x_fail = guess_list1(find(flag==0));
+        y_success= fun(x_success);
+        y_fail = fun(x_fail);
+        hold on
+        h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
+        
+        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
     elseif solver_flag == 3
         solver_title = "Secant Method";
     elseif solver_flag == 4
         solver_title = "FZero";
+        flag
+        x = linspace(0,50,1000);
+        y = fun(x);
+        h(1) = plot(x,y,Color='k')
+        x_success = guess_list1(find(flag==1));
+        x_fail = guess_list1(find(flag~=1));
+        y_success= fun(x_success);
+        y_fail = fun(x_fail);
+        hold on
+        h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
+        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
     end
-
+    figure();
     for i = 1:length(error_list)
         error = error_list{i};
         error_list0 = [error_list0, error(1:end-1)];

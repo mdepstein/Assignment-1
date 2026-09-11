@@ -11,6 +11,10 @@
 % x: estimate for root of fun
 % exit_flag: 1 if success, 0 if fail
 function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
+    if(x_left>=x_right)
+        flag = 2;
+        return
+    end
     for i = 1:max_iter
         f_left = fun(x_left);
         f_right = fun(x_right);
