@@ -33,19 +33,22 @@ x_root = [];
 error_list = cell(length(guess_list1),1);
 flag = [];
 fval = [];
-    for i = 1:length(guess_list1)
+[X,Y] = meshgrid(guess_list1,guess_list2);
+
+    for i = 1:length(guess_list1)*length(guess_list2)
         if solver_flag == 1
             % If left guess is larger than right guess skip that guess
             % if guess_list1(i) <= guess_list2(i)
             %     continue
             % end
-            [x_root(i), flag(i)]  = bisection_solver1(f_record, guess_list1(i), guess_list2(i), dxtol, ftol, max_iter);
+
+            [x_root(i), flag(i)]  = bisection_solver1(f_record, X(i), Y(i), dxtol, ftol, max_iter);
 
         elseif solver_flag == 2
             [x_root(i), flag(i)] = newton_solver1(f_record, guess_list1(i), max_iter, ftol, dxtol, dx_max);
 
         elseif solver_flag == 3
-            [x_root(i), flag(i)] = secant_solver1(f_record, guess_list1(i), guess_list2(i), max_iter, ftol, dxtol, dx_max);
+            [x_root(i), flag(i)] = secant_solver1(f_record, X(i), Y(i), max_iter, ftol, dxtol, dx_max);
 
         elseif solver_flag == 4
             [x_root(i), fval(i),flag(i)] = fzero(f_record, guess_list1(i));
@@ -81,6 +84,17 @@ fval = [];
 
     if solver_flag == 1
         solver_title = "Bisection Method";
+        x_success = X(find(flag==1));
+        x_fail = X(find(flag==0));
+        y_success= Y(find(flag==1));
+        y_fail = Y(find(flag==0));
+        hold on
+        h(1) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
+        h(2) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        l = legend(h,"Success", "Failure");
+        xlabel('Initial Guess Left')
+        ylabel('Initial Guess Right')
+
     elseif solver_flag == 2
         solver_title = "Newton's Method";
         x = linspace(0,50,1000);
@@ -94,11 +108,26 @@ fval = [];
         h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
         
         h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        l = legend(h,"Function", "Success", "Failure");
+        xlabel('x')
+        ylabel('f(x)')
+
     elseif solver_flag == 3
         solver_title = "Secant Method";
+        x_success = X(find(flag==1));
+        x_fail = X(find(flag==0));
+        y_success= Y(find(flag==1));
+        y_fail = Y(find(flag==0));
+        hold on
+        h(1) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
+        h(2) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        l = legend(h,"Success", "Failure");
+        xlabel('Initial Guess 1')
+        ylabel('Initial Guess 2')
+
+
     elseif solver_flag == 4
         solver_title = "FZero";
-        flag
         x = linspace(0,50,1000);
         y = fun(x);
         h(1) = plot(x,y,Color='k')
@@ -108,8 +137,11 @@ fval = [];
         y_fail = fun(x_fail);
         hold on
         h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
-        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        %h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        xlabel('x')
+        ylabel('f(x)')
     end
+    title({solver_title} + " Initial Guess Success/Failure Plot for Sigmoid")
     figure();
     for i = 1:length(error_list)
         error = error_list{i};

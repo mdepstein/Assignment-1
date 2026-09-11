@@ -1,10 +1,17 @@
 function run_convergence_analysis()
-    guess_list1 = [0:0.1:50];
-    guess_list2 = [0:0.01:5];
+    %guess_list1 = [0:0.1:50];
+    %guess_list2 = [0:0.01:5];
+    x = linspace(0,50,50);
+    y = linspace(0,50,50);   
     filter_list = [1e-15, 1e-2, 1e-14, 1e-2, 2];
     x_guess0 = 2;
     solver_flag = 4;
-    convergence_analysis(solver_flag, @test_function, x_guess0, guess_list1, guess_list2, filter_list);
+    if(solver_flag == 2||solver_flag == 4)
+        x = linspace(0,50,300);
+
+        y = 1
+    end
+    convergence_analysis(solver_flag, @test_function, x_guess0, x, y, filter_list);
 end
 %Example sigmoid function
 function [f_val,dfdx] = test_function(x)
