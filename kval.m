@@ -19,10 +19,17 @@ dfdx = (f_right-f_left)/(2*delta_x);
 d2fdx2 = (f_right-2*f_0+f_left)/(delta_x^2);
 end
 
-function [fval] = test_function(x)
-fval = (x.^3)/100 - (x.^2)/8 + 2*x + 6*sin(x/2+6) -.7 - exp(x/6);
-dfdx = 3*(x.^2)/100 - 2*x/8 + 2 +(6/2)*cos(x/2+6) - exp(x/6)/6;
+% function [fval] = test_function(x)
+% fval = (x.^3)/100 - (x.^2)/8 + 2*x + 6*sin(x/2+6) -.7 - exp(x/6);
+% dfdx = 3*(x.^2)/100 - 2*x/8 + 2 +(6/2)*cos(x/2+6) - exp(x/6)/6;
+% end
+
+function [f_val,dfdx] = test_function(x)
+% global input_list;
+% input_list(:,end+1) = x;
+f_val = (x-37.879).^2;
+dfdx = 2*(x-37.879);
 end
 
-[dfdx,d2fdx2] = approximate_derivative(@test_function,.7174)
+[dfdx,d2fdx2] = approximate_derivative(@test_function,37.879)
 k_predicted = abs(0.5*d2fdx2/dfdx)

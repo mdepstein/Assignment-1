@@ -107,7 +107,7 @@ fval = [];
         hold on
         h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
         
-        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        % h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
         l = legend(h,"Function", "Success", "Failure");
         xlabel('x')
         ylabel('f(x)')
