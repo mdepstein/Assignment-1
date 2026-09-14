@@ -16,11 +16,11 @@ function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
         flag = 0;
         return
     end
-    if(fun(x_left)>fun(x_right))
-        x = NaN;
-        flag = 0;
-        return
-    end
+    % if(fun(x_left)>fun(x_right))
+    %     x = NaN;
+    %     flag = 0;
+    %     return
+    % end
     for i = 1:max_iter
         f_left = fun(x_left);
         f_right = fun(x_right);

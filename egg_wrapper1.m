@@ -2,6 +2,8 @@
 %and only returns the x coordinate of the
 %point on the perimeter of the egg
 %(single output)
-function [V, G] = egg_wrapper1(s,x0,y0,theta,egg_params)
+function [x_out,y_out] = egg_wrapper1(s,x0,y0,theta,egg_params)
 [V, G] = egg_func(s,x0,y0,theta,egg_params);
+x_out = V(1);
+y_out = V(2);
 end

@@ -27,14 +27,14 @@ function [x, flag] = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
         end
 
         if abs(x2-x1) <= dxtol
-            fprintf('dxtol\n');
+            fprintf('dxtol\n')
             x = x2;
             flag = 1;
             return
         end
 
         if abs(f1 - f0) > dx_max
-            fprintf('dx_max\n');
+            fprintf('dx_max\n')
             x = x2;
             flag = 0;
             return
@@ -45,6 +45,7 @@ function [x, flag] = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
         f0=f1;
         
     end
+    fprintf('maxiter\n')
     flag = 0;
     x = x1;
 end
