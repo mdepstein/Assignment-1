@@ -11,7 +11,12 @@
 % x: estimate for root of fun, 
 % exit_flag: 1 if success, 0 if fail
 function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
-    if(sign(fun(x_left)) == sign(fun(x_right)))
+    if(sign(fun(x_left)) == sign(fun(x_right))||fun(x_left)==0||fun(x_right)==0)
+        x = NaN;
+        flag = 0;
+        return
+    end
+    if(fun(x_left)>fun(x_right))
         x = NaN;
         flag = 0;
         return
@@ -29,7 +34,8 @@ function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
             x_left = x_c;
         end
 
-        if (abs(abs(x_right)-abs(x_left))) <= dxtol
+        %if (abs(abs(x_right)-abs(x_left))) <= dxtol
+        if abs(x_right-x_left) <= dxtol
             fprintf('dxtol\n');
             x = x_c;
             flag = 1;

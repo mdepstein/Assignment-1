@@ -8,10 +8,12 @@
 % ftol: termination threshold (stop when abs(f(x_guess))<ftol
 % max_iter: maximum iteration limit
 %OUTPUTS
-% x: estimate for root of fun
+% x: estimate for root of fun, 
 % exit_flag: 1 if success, 0 if fail
 function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
-    if(sign(f_left) == sign(f_right))
+    if(sign(fun(x_left)) == sign(fun(x_right)))
+        x = NaN;
+        flag = 0;
         return
     end
     for i = 1:max_iter
@@ -27,7 +29,8 @@ function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
             x_left = x_c;
         end
 
-        if (abs(x_right-x_left)) <= dxtol
+        %if (abs(abs(x_right)-abs(x_left))) <= dxtol
+        if (abs(x_right)-abs(x_left)) <= dxtol
             fprintf('dxtol\n');
             x = x_c;
             flag = 1;
@@ -43,8 +46,8 @@ function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
 
     hold on
     end
-    x = x_c
-    p = log((e-1)/e)/log(e/(e-1));
+    x = x_c;
+    %p = log((e-1)/e)/log(e/(e-1));
     flag = 0;
-    fprintf('max_iter\n')
+    fprintf('max_iter\n');
 end
