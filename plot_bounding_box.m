@@ -26,7 +26,7 @@ function [x_range,y_range] = compute_bounding_box(x0,y0,theta,egg_params)
     [~,x_right] = secant_solver1(egg_wrapper2, .25, .26, max_iter, ftol, dxtol, dx_max)
     [~,x_left] = secant_solver1(egg_wrapper2, .75, .76, max_iter, ftol, dxtol, dx_max)
     x_range = [x_left, x_right];
-    y_range = [y_top, y_botom];
+    y_range = [y_top, y_bottom];
 
 end
 
