@@ -14,6 +14,8 @@
 % if successful, 0 if failure
 function [x, flag] = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
     f0 = fun(x0);
+    
+
     for i = 1:max_iter
         f1 = fun(x1);
         x2 = x1 - f1 * (x1 - x0) / (f1 - f0);
@@ -43,7 +45,7 @@ function [x, flag] = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
         x0=x1;
         x1=x2;
         f0=f1;
-        
+
     end
     fprintf('maxiter\n')
     flag = 0;

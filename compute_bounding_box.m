@@ -71,6 +71,12 @@ x0 = 5; y0 = 5; theta = pi/6;
 figure();
 hold on
 plot_egg(x0,y0,theta,egg_params);
-plot([x_range(1), y_range(1); x_range(1)], 'MarkerFaceColor','r','MarkerSize',3)
-% plot(0,y_range,'MarkerFaceColor','b','MarkerSize',3)
+x_plot_list = [x_range(1), x_range(1), x_range(2), x_range(2), x_range(1)];
+y_plot_list = [y_range(1), y_range(2), y_range(2), y_range(1), y_range(1)];
+plot(x_plot_list, y_plot_list, 'MarkerFaceColor','r','MarkerSize',3)
+title('Egg with Boundary Box');
+xlabel('x-axis');
+ylabel('y-axis');
+legend('Egg', 'Boundary Box');
+
 axis equal
