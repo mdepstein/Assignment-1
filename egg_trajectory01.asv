@@ -1,4 +1,7 @@
 %Example parabolic trajectory
+%egg starts at height of 6
+% reaches peak of 29.3393 at 1.667s
+%lands on ground at 
 function [x0,y0,theta] = egg_trajectory01(t)
     x0 = 7*t + 8;
     y0 = -6*t.^2 + 20*t + 6;

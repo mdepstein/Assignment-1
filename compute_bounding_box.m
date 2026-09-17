@@ -30,21 +30,17 @@ function [x_range,y_range] = compute_bounding_box(x0,y0,theta,egg_params)
     for i=1:length(guess_list)
         guess = guess_list(i);
         
+        %root find for the value of s that makes G(1) or G(2) = 0
         x_root = secant_solver1(x_wrap, guess, guess+1, max_iter, ftol, dxtol, dx_max);
         y_root = secant_solver1(y_wrap, guess, guess+1, max_iter, ftol, dxtol, dx_max);
         
+        %find the corresponding cartesian values
         x_limit_xy = egg_func(x_root, x0, y0, theta, egg_params);
         y_limits_xy = egg_func(y_root, x0, y0, theta, egg_params);
 
         x_limits(i) = x_limit_xy(1);
         y_limits(i) = y_limits_xy(2);
         
-        % [~,y_bottom] = secant_solver1(egg_wrapper1, .75, .76, max_iter, ftol, dxtol, dx_max)
-        % 
-        % [~,x_right] = secant_solver1(egg_wrapper2, .25, .26, max_iter, ftol, dxtol, dx_max)
-        % [~,x_left] = secant_solver1(egg_wrapper2, .75, .76, max_iter, ftol, dxtol, dx_max)
-        % x_range = [x_left, x_right];
-        % y_range = [y_top, y_bottom];
     end
 
     x_range = [min(x_limits), max(x_limits)];
