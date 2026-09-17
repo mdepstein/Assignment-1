@@ -1,5 +1,0 @@
-function y_diff = box_wrapper_y(y_min, x0,y0,theta,egg_params)
-[~, y_range] = compute_bounding_box(x0,y0,theta,egg_params)
-y_diff = y_ground-y_range(1); %abs(diff)?
-end
-

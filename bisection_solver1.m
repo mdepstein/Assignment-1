@@ -30,8 +30,10 @@ function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
         
         if (sign(f_c) == sign(f_right))
             x_right = x_c;
-        else if (sign(f_c) == sign(f_left))
-            x_left = x_c;
+        else 
+            if (sign(f_c) == sign(f_left))
+                x_left = x_c;
+            end
         end
 
         %if (abs(abs(x_right)-abs(x_left))) <= dxtol

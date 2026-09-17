@@ -8,20 +8,15 @@
 %OUTPUTS:
 %t_ground: time that the egg would hit the ground
 %t_wall: time that the egg would hit the wall
-function [t_ground,t_wall] = collision_func(traj_fun, egg_params, y_ground, x_wall)
+function [t_ground,t_wall] = collision_func(egg_params, y_ground, x_wall)
     %et_vals =  @(t) egg_trajectory01(t);
     %x0 = et_vals(1); y0 = et_vals(2); theta = et_vals(3); 
     trajectory_y = @(t) egg_trajectory_y(t,egg_params,y_ground)
     trajectory_x = @(t) egg_trajectory_x(t,egg_params,x_wall)
 
     %newton and secant struggles when slope nears infinity
-    t_ground = bisection_solver1(trajectory_y, 0, 20, 1e-14, 1e-14, 1e3)
-    t_wall =  bisection_solver1(trajectory_x, 0, 20, 1e-14, 1e-14, 1e3)
-    %t_wall = bisection_solver1(traj_fun, 0, x_wall+1, 1000, 1e-14, 1e-14, 1e3);  
-
-    %find where bounding box y_min-y_ground = 0
-    %find where bounding box x_max = x_ground
-    %box wrapper y_min = box_wrapper_y(x0,y0,theta,egg_params)
+    t_ground = bisection_solver1(trajectory_y, 0, 20, 1e-14, 1e-14, 100)
+    t_wall =  bisection_solver1(trajectory_x, 0, 20, 1e-14, 1e-14, 100)
 
     xline(y_ground);
     yline(x_wall);
