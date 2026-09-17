@@ -31,7 +31,7 @@ t = 0;
 [x0,y0,theta] = egg_trajectory01(t,egg_params);
 [V_list, ~] = egg_func(s,x0,y0,theta,egg_params);
 %plot the perimeter of the egg
-egg = plot(V_list(1,:),V_list(2,:),Color='k');
+egg(1) = plot(V_list(1,:),V_list(2,:),Color='k');
 
 for t=0:.001:t_ground
    
@@ -40,15 +40,16 @@ for t=0:.001:t_ground
 
 [V_list, ~] = egg_func(s,x0,y0,theta,egg_params);
 %update the coordinates of the square plot
-set(egg,'xdata',V_list(1,:),'ydata',V_list(2,:));
+set(egg(1),'xdata',V_list(1,:),'ydata',V_list(2,:));
 %update the actual plotting window
 drawnow;
 end
 
-xline(x_wall,'Color','r');
+egg(2) = xline(x_wall,'Color','r');
 yline(y_ground,'Color','r');
 [~,index] = min(V_list(2,:))
 V_list(1,index)
 hold on
-plot(V_list(1,index),y_ground,MarkerFaceColor='b', MarkerSize=20)
+egg(3) = plot(V_list(1,index), y_ground, 'o', 'MarkerFaceColor', 'b', 'MarkerSize', 3)
+legend(egg, "egg","boundaries", "point of contact")
 end
