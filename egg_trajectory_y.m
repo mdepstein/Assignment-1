@@ -7,6 +7,6 @@ function [y_diff] = egg_trajectory_y(t,egg_params,y_ground)
     y0 = -6*t.^2 + 20*t + 6;
     theta = 5*t;
     
-    y_diff = box_wrapper_y(y_ground, x0,y0,theta,egg_params)
+    y_diff = box_wrapper_y(y_ground, x0,y0,theta,egg_params);
 
 end

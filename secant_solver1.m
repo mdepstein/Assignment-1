@@ -13,28 +13,28 @@
 % exit_flag: an integer indicating whether or not the solver succeeded, 1
 % if successful, 0 if failure
 function [x, flag] = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
-    f0 = fun(x0)
+    f0 = fun(x0);
     for i = 1:max_iter
         f1 = fun(x1);
         x2 = x1 - f1 * (x1 - x0) / (f1 - f0);
         % plot(x2,0,".","MarkerSize",10, "Color",'b');
         
         if abs(f1) <= ftol
-            fprintf('ftol\n');
+            %fprintf('ftol\n');
             x = x1;
             flag = 1;
             return
         end
 
         if abs(x2-x1) <= dxtol
-            fprintf('dxtol\n')
+            %fprintf('dxtol\n');
             x = x2;
             flag = 1;
             return
         end
 
         if abs(f1 - f0) > dx_max
-            fprintf('dx_max\n')
+            %fprintf('dx_max\n');
             x = x2;
             flag = 0;
             return
@@ -45,7 +45,7 @@ function [x, flag] = secant_solver1(fun,x0,x1,max_iter,ftol,dxtol,dx_max)
         f0=f1;
 
     end
-    fprintf('maxiter\n')
+    %fprintf('maxiter\n');
     flag = 0;
     x = x1;
 

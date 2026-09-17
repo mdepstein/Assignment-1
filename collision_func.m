@@ -12,9 +12,11 @@ function [t_ground,t_wall] = collision_func(traj_fun, egg_params, y_ground, x_wa
     %et_vals =  @(t) egg_trajectory01(t);
     %x0 = et_vals(1); y0 = et_vals(2); theta = et_vals(3); 
     trajectory_y = @(t) egg_trajectory_y(t,egg_params,y_ground)
-  
+    trajectory_x = @(t) egg_trajectory_x(t,egg_params,x_wall)
+
     %newton and secant struggles when slope nears infinity
-    t_ground = bisection_solver1(trajectory_y, 3, 3+sqrt(abs(y_ground)), 1e-14, 1e-14, 1e3)
+    t_ground = bisection_solver1(trajectory_y, 0, 20, 1e-14, 1e-14, 1e3)
+    t_wall =  bisection_solver1(trajectory_x, 0, 20, 1e-14, 1e-14, 1e3)
     %t_wall = bisection_solver1(traj_fun, 0, x_wall+1, 1000, 1e-14, 1e-14, 1e3);  
 
     %find where bounding box y_min-y_ground = 0
