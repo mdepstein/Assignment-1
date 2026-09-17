@@ -1,17 +1,21 @@
 %Short example demonstrating how to create a MATLAB animation
 %In this case, a square moving along an elliptical path
-function animation_example(t_end)
+function animation_example()
+egg_params = struct();
+egg_params.a = 3; egg_params.b = 2; egg_params.c = .15;
 y_ground = 0; %3.4779
 x_wall = 25;
-
+[t_ground,t_wall] = collision_func(egg_params, y_ground, x_wall);
 clf
 figure()
-hold on; axis equal; axis square %set up the plotting axis
-axis([0,50,-50,25])
+hold on;   %set up the plotting axis
+axis([0,30,-5,30])
+axis equal;
 s = linspace(0,1,100);
 a=3;
 b=2;
 c=.15;
+
 x = [];
 y = [];
 
@@ -24,34 +28,27 @@ for i = s
     y(end+1) = b*sin(2*pi*i).*f;
 end
 t = 0;
-x0 = 7*t + 8;
-y0 = -6*t.^2 + 20*t + 6;
-theta = 5*t;
-%rotation matrix corresponding to theta
-R = [cos(theta),-sin(theta);sin(theta),cos(theta)];
-%compute position and gradient for rotated + translated oval
-V = R*[x;y]+[x0*ones(1,length(theta));y0*ones(1,length(theta))];
-egg = plot(V(1,:),V(2,:));
+[x0,y0,theta] = egg_trajectory01(t,egg_params);
+[V_list, ~] = egg_func(s,x0,y0,theta,egg_params);
+%plot the perimeter of the egg
+egg = plot(V_list(1,:),V_list(2,:),Color='k');
 
-for t=0:.001:t_end
+for t=0:.001:t_ground
    
 %compute the position of the square's center (travelling along ellipse)
-x0 = 7*t + 8;
-y0 = -6*t.^2 + 20*t + 6;
-theta = 5*t;
+[x0,y0,theta] = egg_trajectory01(t,egg_params);
 
-%rotation matrix corresponding to theta
-R = [cos(theta),-sin(theta);sin(theta),cos(theta)];
-%compute position and gradient for rotated + translated oval
-V = R*[x;y]+[x0*ones(1,length(theta));y0*ones(1,length(theta))];
+[V_list, ~] = egg_func(s,x0,y0,theta,egg_params);
 %update the coordinates of the square plot
-set(egg,'xdata',V(1,:),'ydata',V(2,:));
+set(egg,'xdata',V_list(1,:),'ydata',V_list(2,:));
 %update the actual plotting window
 drawnow;
 end
 
-xline(y_ground);
-yline(x_wall);
-x(find(abs(y-y_ground)<1e-10))
-plot(x(find(abs(y-y_ground)<1e-10)),y_ground,MarkerFaceColor='r', MarkerSize=3)
+xline(x_wall,'Color','r');
+yline(y_ground,'Color','r');
+[~,index] = min(V_list(2,:))
+V_list(1,index)
+hold on
+plot(V_list(1,index),y_ground,MarkerFaceColor='b', MarkerSize=20)
 end
