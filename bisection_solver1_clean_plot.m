@@ -30,7 +30,7 @@ function [x,flag] = bisection_solver1(fun,x_left,x_right,dxtol,ftol,max_iter)
             x_left = x_c;
         end
 
-        if (abs(x_right)-abs(x_left)) <= dxtol
+        if (abs(x_right-x_left)) <= dxtol
             fprintf('dxtol\n');
             flag = 1;
             return
