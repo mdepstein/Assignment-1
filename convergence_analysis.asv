@@ -89,11 +89,18 @@ fval = [];
         y_success= Y(find(flag==1));
         y_fail = Y(find(flag==0));
         hold on
-        h(1) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
-        h(2) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        h(1) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
+        h(2) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 4, 'Color','r');
+        xline(x_root, 'LineWidth', 3, 'Color', 'Blue');
+        yline(x_root, 'LineWidth', 3, 'Color', 'Blue');
+        x_root_point = mean(x_root(~isnan(x_root)));
+        h(3) = plot(x_root_point, x_root_point, 'ko', 'MarkerSize', 5);
+
         l = legend(h,"Success", "Failure");
-        xlabel('Initial Guess Left')
-        ylabel('Initial Guess Right')
+        xlabel('Initial Guess Left (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('Initial Guess Right (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        fit_line_x = 10.^[-14:.1:1.5];
+
 
     elseif solver_flag == 2
         solver_title = "Newton's Method";
@@ -104,13 +111,15 @@ fval = [];
         x_fail = guess_list1(find(flag==0));
         y_success= fun(x_success);
         y_fail = fun(x_fail);
-        hold on
-        h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
+        hold on        h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
         
-        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
-        l = legend(h,"Function", "Success", "Failure");
-        xlabel('x')
-        ylabel('f(x)')
+        % h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        l = legend(h,"Function", "Success", "Failure", 'Root Location');
+        xlabel('x', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('f(x)', 'Interpreter', 'Latex', 'FontSize', 15)
+
+        fit_line_x = 10.^[-6:.1:3];
+
 
     elseif solver_flag == 3
         solver_title = "Secant Method";
@@ -119,11 +128,14 @@ fval = [];
         y_success= Y(find(flag==1));
         y_fail = Y(find(flag==0));
         hold on
-        h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
-        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        h(1) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
+        h(2) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 4, 'Color','r');
         l = legend(h,"Success", "Failure");
-        xlabel('iGuess 1')
-        ylabel('Guess 2')
+        xlabel('Initial Guess 1', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('Initial Guess 2', 'Interpreter', 'Latex', 'FontSize', 15)
+
+        fit_line_x = 10.^[-8:.1:2];
+
 
 
     elseif solver_flag == 4
@@ -136,22 +148,23 @@ fval = [];
         y_success= fun(x_success);
         y_fail = fun(x_fail);
         hold on
-        h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 2, 'Color','g');
+        h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
         %h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
-        xlabel('x')
-        ylabel('f(x)')
+        xlabel('x', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('f(x)', 'Interpreter', 'Latex', 'FontSize', 15)
+        fit_line_x = 10.^[-9.5:.1:1.5];
     end
-    title({solver_title} + "Initial Guess Success/Failure Plot for Sigmoid")
+    title({solver_title} + " Initial Guess Success/Failure Plot for Sigmoid", 'Interpreter', 'Latex', 'FontSize', 20)
     figure();
     for i = 1:length(error_list)
         error = error_list{i};
         error_list0 = [error_list0, error(1:end-1)];
         error_list1 = [error_list1, error(2:end)];
-        h(1) = loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        h(1) = loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','r', 'MarkerSize', 4, 'Color','r');
         hold on;
-        xlabel('e_n')
-        ylabel('e_{n+1}')
-        title({solver_title} + " Convergence Rate Plot")
+        xlabel('Error at Current Iteration (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('Error at Next Iteration (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        title({solver_title} + " Convergence Rate Plot", 'Interpreter', 'Latex', 'FontSize', 20)
     end
 
     x_regression = [];
@@ -171,7 +184,7 @@ fval = [];
         end
     end
 
-    h(2) = loglog(x_regression,y_regression,'ko','markerfacecolor','b', 'MarkerSize', 2, 'Color','b')
+    h(2) = loglog(x_regression,y_regression,'ko','markerfacecolor','b', 'MarkerSize', 4, 'Color','b')
 
     %x_regression -> e_n
     %y_regression -> e_{n+1}
@@ -179,11 +192,13 @@ fval = [];
 
     %example for how to plot fit line
     %generate x data on a logarithmic range
-    fit_line_x = 10.^[-5:.1:1];
     %compute the corresponding y values
     fit_line_y = k*fit_line_x.^p;
     %plot on a loglog plot.
-    h(3) = loglog(fit_line_x,fit_line_y,'k-','linewidth',2,'Color','black');
+    h(3) = loglog(fit_line_x,fit_line_y,'k-','linewidth', 2,'Color','black');
+    set(gca, 'XMinorTick', 'off');
+    set(gca, 'YMinorTick', 'off');
+    
     l = legend(h,"Raw Data", "Filtered Data", "Fit Line");
     set(l,'location','northwest');
     fontsize(l, 14, "points"); % Sets the legend font size to 14 points
