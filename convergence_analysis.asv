@@ -91,12 +91,13 @@ fval = [];
         hold on
         h(1) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
         h(2) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 4, 'Color','r');
-        xline(x_root, 'LineWidth', 3, 'Color', 'Blue');
-        yline(x_root, 'LineWidth', 3, 'Color', 'Blue');
         x_root_point = mean(x_root(~isnan(x_root)));
-        h(3) = plot(x_root_point, x_root_point, 'ko', 'MarkerSize', 5);
+        h(3) = plot([x_root_point x_root_point], [10 40], 'LineWidth', 3, 'Color', 'Blue');
+        h(4) = plot([10 40], [x_root_point x_root_point], 'LineWidth', 3, 'Color', 'Cyan');
+        h(5) = plot(x_root_point, x_root_point, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');
+        l = legend(h,"Success", "Failure", "Root Location x", "Root Location y",  "Root Location");
+        fontsize(l, 14, 'points');
 
-        l = legend(h,"Success", "Failure");
         xlabel('Initial Guess Left (-)', 'Interpreter', 'Latex', 'FontSize', 15)
         ylabel('Initial Guess Right (-)', 'Interpreter', 'Latex', 'FontSize', 15)
         fit_line_x = 10.^[-14:.1:1.5];
@@ -106,18 +107,27 @@ fval = [];
         solver_title = "Newton's Method";
         x = linspace(0,50,1000);
         y = fun(x);
-        h(1) = plot(x,y,Color='k')
-        x_success = guess_list1(find(flag==1));
+        h(1) = plot(x,y,Color='k');
+        x_success = guess_list1(find(flag==1))
         x_fail = guess_list1(find(flag==0));
         y_success= fun(x_success);
         y_fail = fun(x_fail);
-        hold on        h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
+        hold on;
+        h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
+        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
         
-        % h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
-        l = legend(h,"Function", "Success", "Failure", 'Root Location');
-        xlabel('x', 'Interpreter', 'Latex', 'FontSize', 15)
-        ylabel('f(x)', 'Interpreter', 'Latex', 'FontSize', 15)
+        x_root_point = mean(x_root(~isnan(x_success)))
+        h(4) = plot([x_root_point x_root_point], [-10 0], 'LineWidth', 3, 'Color', 'Blue');
+        h(5) = plot([0 50], [0 0], 'LineWidth', 3, 'Color', 'Cyan');
+        h(6) = plot(x_root_point, x_root_point, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');
 
+        l = legend(h,"Function", "Success", "Root Location", "Location", "best");
+        fontsize(l, 14, 'points');
+        
+        xlabel('Initial guess, x0 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('Sigmoid Functon, f(x0) (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylim([-4, 6])
+        xlim([0 50])
         fit_line_x = 10.^[-6:.1:3];
 
 
@@ -130,9 +140,11 @@ fval = [];
         hold on
         h(1) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
         h(2) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 4, 'Color','r');
-        l = legend(h,"Success", "Failure");
-        xlabel('Initial Guess 1', 'Interpreter', 'Latex', 'FontSize', 15)
-        ylabel('Initial Guess 2', 'Interpreter', 'Latex', 'FontSize', 15)
+        l = legend(h,"Success", "Failure", "Location", "best");
+        fontsize(l, 14, 'points');
+
+        xlabel('Initial guess, x0 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('Sigmoid Functon, f(x0) (-)', 'Interpreter', 'Latex', 'FontSize', 15)
 
         fit_line_x = 10.^[-8:.1:2];
 
@@ -200,6 +212,8 @@ fval = [];
     set(gca, 'YMinorTick', 'off');
     
     l = legend(h,"Raw Data", "Filtered Data", "Fit Line");
+    fontsize(l, 14, 'points');
+
     set(l,'location','northwest');
     fontsize(l, 14, "points"); % Sets the legend font size to 14 points
 end
