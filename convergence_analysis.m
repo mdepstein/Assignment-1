@@ -166,8 +166,17 @@ fval = [];
         hold on
         h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
         %h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
-        xlabel('x', 'Interpreter', 'Latex', 'FontSize', 15)
-        ylabel('f(x)', 'Interpreter', 'Latex', 'FontSize', 15)
+        
+        x_root_point = x_success(157);
+        h(3) = plot([x_root_point x_root_point], [-10 10], 'LineWidth', 3, 'Color', 'Blue');
+        h(4) = plot([0 50], [0 0], 'LineWidth', 3, 'Color', 'Cyan');
+        h(5) = plot(x_root_point, 0, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');
+
+        l = legend(h,"Function", "Success", "Root Location x", "Root Location y",  "Root Location", "Location", "best");
+        fontsize(l, 14, 'points');
+
+        xlabel('Initial guess, x0 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('Sigmoid Functon, f(x0) (-)', 'Interpreter', 'Latex', 'FontSize', 15)
         fit_line_x = 10.^[-9.5:.1:1.5];
     end
     title({solver_title} + " Initial Guess Success/Failure Plot for Sigmoid", 'Interpreter', 'Latex', 'FontSize', 20)

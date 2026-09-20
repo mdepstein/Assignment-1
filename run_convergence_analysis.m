@@ -5,7 +5,7 @@ function run_convergence_analysis()
     y = linspace(10,40,50);   
     filter_list = [1e-15, 1e-2, 1e-14, 1e-2, 2];
     x_guess0 = 2;
-    solver_flag = 3;
+    solver_flag = 4;
     if(solver_flag == 2||solver_flag == 4)
         x = linspace(0,50,300);
 

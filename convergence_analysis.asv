@@ -108,7 +108,7 @@ fval = [];
         x = linspace(0,50,1000);
         y = fun(x);
         h(1) = plot(x,y,Color='k');
-        x_success = guess_list1(find(flag==1))
+        x_success = guess_list1(find(flag==1));
         x_fail = guess_list1(find(flag==0));
         y_success= fun(x_success);
         y_fail = fun(x_fail);
@@ -116,12 +116,12 @@ fval = [];
         h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
         h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
         
-        x_root_point = mean(x_root(~isnan(x_success)))
-        h(4) = plot([x_root_point x_root_point], [-10 0], 'LineWidth', 3, 'Color', 'Blue');
+        x_root_point = mean(x_success(~isnan(x_success)));
+        h(4) = plot([x_root_point x_root_point], [-10 10], 'LineWidth', 3, 'Color', 'Blue');
         h(5) = plot([0 50], [0 0], 'LineWidth', 3, 'Color', 'Cyan');
-        h(6) = plot(x_root_point, x_root_point, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');
+        h(6) = plot(x_root_point, 0, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');
 
-        l = legend(h,"Function", "Success", "Root Location", "Location", "best");
+        l = legend(h,"Function", "Success", "Fail", "Root Location x", "Root Location y",  "Root Location", "Location", "best");
         fontsize(l, 14, 'points');
         
         xlabel('Initial guess, x0 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
@@ -140,11 +140,15 @@ fval = [];
         hold on
         h(1) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
         h(2) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 4, 'Color','r');
-        l = legend(h,"Success", "Failure", "Location", "best");
+        x_root_point = mean(x_root(~isnan(x_root)));
+        h(3) = plot([x_root_point x_root_point], [10 40], 'LineWidth', 3, 'Color', 'Blue');
+        h(4) = plot([10 40], [x_root_point x_root_point], 'LineWidth', 3, 'Color', 'Cyan');
+        h(5) = plot(x_root_point, x_root_point, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');
+        l = legend(h,"Success", "Failure", "Root Location x", "Root Location y", "Root Location", "Location", "Best");
         fontsize(l, 14, 'points');
 
-        xlabel('Initial guess, x0 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
-        ylabel('Sigmoid Functon, f(x0) (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        xlabel('Initial Guess 1 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('Initial Guess 2 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
 
         fit_line_x = 10.^[-8:.1:2];
 
@@ -155,15 +159,24 @@ fval = [];
         x = linspace(0,50,1000);
         y = fun(x);
         h(1) = plot(x,y,Color='k')
-        x_success = guess_list1(find(flag==1));
+        x_success = guess_list1(find(flag==1))
         x_fail = guess_list1(find(flag~=1));
         y_success= fun(x_success);
         y_fail = fun(x_fail);
         hold on
         h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
         %h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
-        xlabel('x', 'Interpreter', 'Latex', 'FontSize', 15)
-        ylabel('f(x)', 'Interpreter', 'Latex', 'FontSize', 15)
+        
+        x_root_point = fins);
+        h(3) = plot([x_root_point x_root_point], [-10 10], 'LineWidth', 3, 'Color', 'Blue');
+        h(4) = plot([0 50], [0 0], 'LineWidth', 3, 'Color', 'Cyan');
+        h(5) = plot(x_root_point, 0, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');
+
+        l = legend(h,"Function", "Success", "Root Location x", "Root Location y",  "Root Location", "Location", "best");
+        fontsize(l, 14, 'points');
+
+        xlabel('Initial guess, x0 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+        ylabel('Sigmoid Functon, f(x0) (-)', 'Interpreter', 'Latex', 'FontSize', 15)
         fit_line_x = 10.^[-9.5:.1:1.5];
     end
     title({solver_title} + " Initial Guess Success/Failure Plot for Sigmoid", 'Interpreter', 'Latex', 'FontSize', 20)
