@@ -114,9 +114,9 @@ fval = [];
         y_fail = fun(x_fail);
         hold on;
         h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
-        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 4, 'Color','r');
         
-        x_root_point = mean(x_success(~isnan(x_success)));
+        x_root_point = x_suc;
         h(4) = plot([x_root_point x_root_point], [-10 10], 'LineWidth', 3, 'Color', 'Blue');
         h(5) = plot([0 50], [0 0], 'LineWidth', 3, 'Color', 'Cyan');
         h(6) = plot(x_root_point, 0, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');
@@ -159,7 +159,7 @@ fval = [];
         x = linspace(0,50,1000);
         y = fun(x);
         h(1) = plot(x,y,Color='k')
-        x_success = guess_list1(find(flag==1))
+        x_success = guess_list1(find(flag==1));
         x_fail = guess_list1(find(flag~=1));
         y_success= fun(x_success);
         y_fail = fun(x_fail);
@@ -167,7 +167,7 @@ fval = [];
         h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
         %h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
         
-        x_root_point = fins);
+        x_root_point = x_success(157);
         h(3) = plot([x_root_point x_root_point], [-10 10], 'LineWidth', 3, 'Color', 'Blue');
         h(4) = plot([0 50], [0 0], 'LineWidth', 3, 'Color', 'Cyan');
         h(5) = plot(x_root_point, 0, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');

@@ -114,9 +114,9 @@ fval = [];
         y_fail = fun(x_fail);
         hold on;
         h(2) = plot(x_success,y_success, 'ko','markerfacecolor','g', 'MarkerSize', 4, 'Color','g');
-        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
+        h(3) = plot(x_fail,y_fail,'ko','markerfacecolor','r', 'MarkerSize', 4, 'Color','r');
         
-        x_root_point = mean(x_success(~isnan(x_success)));
+        x_root_point = x_success(25);
         h(4) = plot([x_root_point x_root_point], [-10 10], 'LineWidth', 3, 'Color', 'Blue');
         h(5) = plot([0 50], [0 0], 'LineWidth', 3, 'Color', 'Cyan');
         h(6) = plot(x_root_point, 0, 'ko', 'MarkerSize', 10, 'MarkerFaceColor', 'black');
