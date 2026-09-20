@@ -20,7 +20,7 @@ for i = 1:length(x_left)
     x_right(i) = 3*rand();
 
     % Run solver
-    x_root = bisection_solver1(f_record,x_left(i), x_right(i),1e-12,1e-12,1000);
+    x_root = bisection_solver1_clean_plot(f_record,x_left(i), x_right(i),1e-12,1e-12,1000);
     input_list = my_recorder.get_input_list();
     
     % Calculate error
@@ -44,9 +44,9 @@ for i = 1:length(error_list)
     error_list1 = [error_list1, error(2:end)];
     h(1) = loglog(error(1:end-1),error(2:end),'ko','markerfacecolor','r', 'MarkerSize', 2, 'Color','r');
     hold on;
-    xlabel('e_n')
-    ylabel('e_{n+1}')
-    title("Bisection's Convergence Rate Plot")
+    xlabel('Error at Current Iteration (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+    ylabel('Error at Next Iteration (-)', 'Interpreter', 'Latex', 'FontSize', 15)
+    title("Bisection Solver Convergence Rate Plot", 'Interpreter', 'Latex', 'FontSize', 20)
     end
 end
 
