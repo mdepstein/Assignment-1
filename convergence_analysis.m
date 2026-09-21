@@ -128,7 +128,7 @@ fval = [];
         ylabel('Sigmoid Functon, f(x0) (-)', 'Interpreter', 'Latex', 'FontSize', 15)
         ylim([-4, 6])
         xlim([0 50])
-        fit_line_x = 10.^[-6:.1:3];
+        fit_line_x = 10.^[-7:.1:3];
 
 
     elseif solver_flag == 3
@@ -150,7 +150,7 @@ fval = [];
         xlabel('Initial Guess 1 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
         ylabel('Initial Guess 2 (-)', 'Interpreter', 'Latex', 'FontSize', 15)
 
-        fit_line_x = 10.^[-8:.1:2];
+        fit_line_x = 10.^[-9:.1:2.5];
 
 
 

@@ -21,18 +21,18 @@ end
 % dfdx = 2*(x-37.879);
 % end
 
-% Example sigmoid function
-function [f_val,dfdx] = test_function(x)
-a = 27.3; b = 2; c = 8.3; d = -3;
-H = exp((x-a)/b);
-dH = H/b;
-L = 1+H;
-dL = dH;
-f_val = c*H./L+d;
-dfdx = c*(L.*dH-H.*dL)./(L.^2);
-end
-
-% function [fval,dfdx] = test_function(x)
-%     fval = (x.^3)/100 - (x.^2)/8 + 2*x + 6*sin(x/2+6) -.7 - exp(x/6);
-%     dfdx = 3*(x.^2)/100 - 2*x/8 + 2 +(6/2)*cos(x/2+6) - exp(x/6)/6;
+% % Example sigmoid function
+% function [f_val,dfdx] = test_function(x)
+% a = 27.3; b = 2; c = 8.3; d = -3;
+% H = exp((x-a)/b);
+% dH = H/b;
+% L = 1+H;
+% dL = dH;
+% f_val = c*H./L+d;
+% dfdx = c*(L.*dH-H.*dL)./(L.^2);
 % end
+
+function [fval,dfdx] = test_function(x)
+    fval = (x.^3)/100 - (x.^2)/8 + 2*x + 6*sin(x/2+6) -.7 - exp(x/6);
+    dfdx = 3*(x.^2)/100 - 2*x/8 + 2 +(6/2)*cos(x/2+6) - exp(x/6)/6;
+end
